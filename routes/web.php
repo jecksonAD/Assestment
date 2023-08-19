@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\GoogleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('target.login');
+Route::get('/dashboard', function () {
+    return view('main');
+})->name('target.main');
+
+Route::get('auth/google',[GoogleController::class, 'googleSignInPage']);
+Route::get('getData',[GoogleController::class, 'getData']);
+Route::get('auth/google/callback',[GoogleController::class, 'googleCallBack']);
