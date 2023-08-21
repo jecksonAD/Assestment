@@ -24,6 +24,8 @@ DB_PASSWORD=root
 ```
 WINDOW (DOCKER DESKTOP,WSL2,Laravel) 
 UBUNTU(DOCKER,Laravel)
+sudo chmod -R 777 some file (storage log file, bootstrap cache file)
+
 ```
 # Instruction Docker Desktop + WSL2 Ubuntu Window 11.
 ```
