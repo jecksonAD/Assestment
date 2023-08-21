@@ -1,7 +1,10 @@
 # Assestment-Cognixus
+```
+DockerHub
+```
 
 # env file configuration 
-
+```
 APP_URL=http://localhost
 GOOGLE_CLIENT_ID=73810002661-tmror47e3antu9eeg93iktnmlofq4f20.apps.googleusercontent.com
 GOOGLE_SECRET_ID=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
@@ -13,7 +16,7 @@ DB_PORT=3306
 DB_DATABASE=laravel_docker
 DB_USERNAME=root
 DB_PASSWORD=root
-
+```
 # Instruction and Command 
 ```
 Docker Desktop + WSL2 Ubuntu Window 11. 
