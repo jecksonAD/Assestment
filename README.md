@@ -2,10 +2,13 @@
 ```
 Develop Using Laravel then containerized it through Docker
 This Application will consist of REST API, Google Log In(Socialite) and Front-End(HTML,CSS,JavaScript)
-Front-End Calling Rest Api using AJAX Request.Token will store in cookies in front end for verification purpose
-Database will be localhost.(Add an env file or Modify the env file based on the configuration below will do.)
+Front-End Calling Rest Api using AJAX Request. The token will store in cookies in the front end for verification purposes
+The database will be localhost. (Add an env file or Modifying the env file based on the configuration below will do.)
 ```
-
+# Link 
+```
+https://hub.docker.com/r/jecksondian/assestment
+```
 # Env file configuration 
 ```
 APP_URL=http://localhost
