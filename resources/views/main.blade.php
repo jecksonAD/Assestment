@@ -14,7 +14,6 @@ function getToken()
 
 }
 
-
 function setCookie(name, value, days) {
     var expires = '';
     if (days) {
@@ -61,9 +60,93 @@ function getProfile()
         },
     });
 }
+
+
+function googleLogOut()
+{
+    $.ajax({
+        type: "post",
+        url: "api/auth/googleLogOut",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+       },
+        data: { token: getCookieValue("token") },
+        success: function (data) {
+            if(data.code="200")
+            {
+                window.location.href = '/';
+            }
+        },
+    });
+}
+
+function showAddDataPrompt() {
+    var result = prompt("New To Do List:", ""); // Display the prompt dialog
+
+    if (result === null || result==="") {
+      
+    } else {
+
+        $.ajax({
+        type: "post",
+        url: "api/addData",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+       },
+        data: { token: getCookieValue("token") ,name:result},
+        success: function (data) {
+         console.log(data);
+        },
+    });
+
+    }
+}
+
+function addData()
+{
+    $.ajax({
+        type: "post",
+        url: "api/addData",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+       },
+        data: { token: getCookieValue("token") },
+        success: function (data) {
+         console.log(data);
+        },
+    });
+}
+function getData()
+{
+    // Get a reference to the table body
+   
+
+    $.ajax({
+        type: "get",
+        url: "api/getData",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+       },
+        data: { token: getCookieValue("token") },
+        success: function (data) {
+         data.forEach(item => {
+            var row = document.createElement('tr');
+            var status = (item.status ==0) ? "Done": "In Progress";
+            row.innerHTML = `
+                <th>${item.name}</th>
+                <th>${status}</th>
+                <th>${item.status ==1 ? '<button>Complete</button>' : ''}</th>
+            `;
+            var tbody = document.querySelector('#data-table tbody');
+            tbody.appendChild(row);
+        });
+        },
+    });
+}
 var token = "{{ session('user_token') }}";
 setCookie('token',token,1);
 getProfile();
+getData();
     </script>
 <html lang="en">
 <head>
@@ -81,13 +164,45 @@ getProfile();
                     <p><strong>Name:</strong> <a id="name"></a></p>
                     <p><strong>Email:</strong> <a id="email"></a></p>
                 </div>
+                
             </div>
         </main>
-        
+        <table border="1" id="data-table">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                   
+                </tr>
+               
+            </tbody>
+        </table>
+        <button onclick="showAddDataPrompt()">New To-Do List</button>
+                    <button onclick="googleLogOut()">Log Out</button>
     </div>
 </body>
 </html>
 <style>
+    table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 /* Reset some default styling */
 body, h1, h2, p {
     margin: 0;

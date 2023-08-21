@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Services\GeneralService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,34 @@ class GoogleController extends Controller
     {
     $this->GeneralService = $GeneralService;
  
+    }
+
+    public function googleLogOut(request $request)
+    {
+        try{
+            $response = Http::post('https://accounts.google.com/o/oauth2/revoke', [
+                'token' => $request->token,
+            ]);
+
+            return response()->json([
+                'code'=>'200',
+            ]);
+          
+        }
+        catch(Exception $e)
+        {
+             return response()->json([
+                'code'=>'404',
+                'msg'=>$e,
+            ]);
+        }
+       
+       
+    
+        // Clear the user's session
+       
+    
+        return redirect('/'); 
     }
     public function googleSignInPage()
     {
