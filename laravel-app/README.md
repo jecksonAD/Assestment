@@ -1,4 +1,12 @@
-# env file configuration 
+# Description
+```
+Develop Using Laravel then containerized it through Docker
+This Application will consist of REST API, Google Log In(Socialite) and Front-End(HTML,CSS,JavaScript)
+Front-End Calling Rest Api using AJAX Request.Token will store in cookies in front end for verification purpose
+Database will be localhost.(Add an env file or Modify the env file based on the configuration below will do.)
+```
+
+# Env file configuration 
 ```
 APP_URL=http://localhost
 GOOGLE_CLIENT_ID=73810002661-tmror47e3antu9eeg93iktnmlofq4f20.apps.googleusercontent.com
@@ -32,7 +40,10 @@ UBUNTU(DOCKER,Laravel)
 - run php artisan migrate.
 ```
 
-# Interface Intrusction 
+# Simple UI Interface Instruction 
 ```
-
+LOGIN PAGE : Click Login (Google Sign In UI will pop out) if no just refresh the page will do 
+DASHBOARD PAGE :
+Email and Name show.
+Log Out Button, Add New To-Do List,Delete TO-DO List, Update complete status of TO-DO List.
 ```
