@@ -1,8 +1,3 @@
-# Assestment-Cognixus
-```
-DockerHub
-```
-
 # env file configuration 
 ```
 APP_URL=http://localhost
@@ -17,9 +12,27 @@ DB_DATABASE=laravel_docker
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
-# Instruction and Command 
+# Requirement 
 ```
-Docker Desktop + WSL2 Ubuntu Window 11. 
-make up (starting server for docker) make sure make environment was install
-make stop (stopping server for docker)
+WINDOW (DOCKER DESKTOP,WSL2,Laravel) 
+UBUNTU(DOCKER,Laravel)
+```
+# Instruction Docker Desktop + WSL2 Ubuntu Window 11.
+```
+- pull the code to WSL2 Ubuntu directory if no it will have latency issue due to layer between window directory and linux directory 
+- docker pull jecksondian/assestment:v2.0.
+- run the docker using make run or docker compose up.
+- go the terminal through docker desktop and run php artisan migrate.
+```
+# Instruction Docker with Ubuntu.
+```
+- pull the code into Ubuntu directory .
+- docker pull jecksondian/assestment:v2.0.
+- run the docker using make run or docker compose up.
+- run php artisan migrate.
+```
+
+# Interface Intrusction 
+```
+
 ```
