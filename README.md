@@ -27,7 +27,8 @@ UBUNTU(DOCKER,Laravel)
 ```
 # Instruction Docker Desktop + WSL2 Ubuntu Window 11.
 ```
-- pull the code to WSL2 Ubuntu directory if no it will have latency issue due to layer between window directory and linux directory 
+- pull the code to WSL2 Ubuntu directory if no it will have latency issue due to layer between window directory and linux directory
+- run composer install
 - docker pull jecksondian/assestment:v2.0.
 - run the docker using make run or docker compose up.
 - go the terminal through docker desktop and run php artisan migrate.
