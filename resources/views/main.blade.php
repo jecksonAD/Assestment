@@ -132,7 +132,8 @@ function deleteData(id)
         },
     });
 }
-
+var token = "{{ session('user_token') }}";
+setCookie('token',token,1);
 getProfileDashboard();
 getData();
     </script>
