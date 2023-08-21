@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('datas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('google_id');
+            $table->string('google_id');
             $table->string('name');
             $table->string('status');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

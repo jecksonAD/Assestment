@@ -24,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('auth/googleLogOut',[GoogleController::class, 'googleLogOut']);
 Route::post('addData',[DataController::class, 'addData']);
 Route::get('getData',[DataController::class, 'getData']);
+Route::post('updateData',[DataController::class, 'updateData']);
+Route::post('deleteData',[DataController::class, 'deleteData']);

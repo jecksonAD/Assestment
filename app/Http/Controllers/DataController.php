@@ -14,7 +14,7 @@ class DataController extends Controller
     {
         $user=Socialite::driver('google')->userFromToken($request->token);
         $userResult=User::where('google_id','=',$user->id)->get()->first();
-        $result=DataModel::where('google_id','=',$userResult->google_id)->get();
+        $result=DataModel::where('google_id','=',$userResult->google_id)->whereNull('deleted_at')->get();
 
         return $result;
     }
@@ -43,9 +43,73 @@ class DataController extends Controller
         catch(\Exception $e)
         {
             DB::rollBack();
-            return $e;
-            exit;
+            return response()->json([
+                "code"=>"404",
+                "msg"=>$e
+              ]);
+           
         }
       DB::commit();
+
+      return response()->json([
+        "code"=>"200"
+      ]);
+    }
+
+    public function updateData(request $request)
+    {
+       
+        DB::beginTransaction();
+        try{
+
+            $result=DataModel::find($request->id);
+           // return $result;
+            if($result)
+            {
+                $result->status=1;
+                $result->save();
+            } 
+        }
+        catch(\Exception $e)
+        {
+            DB::rollBack();
+            return response()->json([
+                "code"=>"404",
+                "msg"=>$e
+              ]);
+           
+        }
+      DB::commit();
+      return response()->json([
+        "code"=>"200"
+      ]);
+    }
+    public function deleteData(request $request)
+    {
+       
+        DB::beginTransaction();
+        try{
+
+            $result=DataModel::find($request->id);
+           // return $result;
+            if($result)
+            {
+                $result->deleted_at=now();
+                $result->save();
+            } 
+        }
+        catch(\Exception $e)
+        {
+            DB::rollBack();
+            return response()->json([
+                "code"=>"404",
+                "msg"=>$e
+              ]);
+           
+        }
+      DB::commit();
+      return response()->json([
+        "code"=>"200"
+      ]);
     }
 }

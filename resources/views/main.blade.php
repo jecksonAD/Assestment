@@ -1,43 +1,8 @@
 <!DOCTYPE html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('js/global.js') }}"></script>
 <script type="text/javascript">
-
-function getToken()
-{
-    var currentUrl = window.location.href;
-
-    var urlParams = new URLSearchParams(currentUrl);
-    var token = urlParams.get('token');
-    console.log(urlParams);
-    console.log('Current URL:', currentUrl);
-    return token;
-
-}
-
-function setCookie(name, value, days) {
-    var expires = '';
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = '; expires=' + date.toUTCString();
-    }
-    document.cookie = name + '=' + value + expires + '; path=/';
-}
-
-function getCookieValue(cookieName) {
-    var name = cookieName + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var cookieArray = decodedCookie.split(';');
-    for (var i = 0; i < cookieArray.length; i++) {
-        var cookie = cookieArray[i].trim();
-        if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length);
-        }
-    }
-    return null;
-}
-
-function getProfile()
+function getProfileDashboard()
 {
     var cookieName = 'token';
     var cookieValue = getCookieValue(cookieName);
@@ -60,8 +25,6 @@ function getProfile()
         },
     });
 }
-
-
 function googleLogOut()
 {
     $.ajax({
@@ -79,7 +42,6 @@ function googleLogOut()
         },
     });
 }
-
 function showAddDataPrompt() {
     var result = prompt("New To Do List:", ""); // Display the prompt dialog
 
@@ -95,32 +57,38 @@ function showAddDataPrompt() {
        },
         data: { token: getCookieValue("token") ,name:result},
         success: function (data) {
-         console.log(data);
+            if(data.code=="200")
+            {   
+                location.reload();
+
+            }
         },
     });
 
     }
 }
-
-function addData()
+function updateData(id)
 {
+    
     $.ajax({
         type: "post",
-        url: "api/addData",
+        url: "api/updateData",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
        },
-        data: { token: getCookieValue("token") },
+        data: { id:id},
         success: function (data) {
-         console.log(data);
+            //console.log(data);
+            if(data.code=="200")
+            {   
+                location.reload();
+
+            }
         },
     });
 }
 function getData()
 {
-    // Get a reference to the table body
-   
-
     $.ajax({
         type: "get",
         url: "api/getData",
@@ -131,11 +99,14 @@ function getData()
         success: function (data) {
          data.forEach(item => {
             var row = document.createElement('tr');
-            var status = (item.status ==0) ? "Done": "In Progress";
+            var status = (item.status ==1) ? "Done": "In Progress";
             row.innerHTML = `
                 <th>${item.name}</th>
                 <th>${status}</th>
-                <th>${item.status ==1 ? '<button>Complete</button>' : ''}</th>
+                <th>
+                <button style="display: ${item.status ==0 ? 'block' : 'none'}" onclick="updateData(${item.id})">Complete</button>
+                <button onclick="deleteData(${item.id})">Delete</button>
+                </th>
             `;
             var tbody = document.querySelector('#data-table tbody');
             tbody.appendChild(row);
@@ -143,9 +114,26 @@ function getData()
         },
     });
 }
-var token = "{{ session('user_token') }}";
-setCookie('token',token,1);
-getProfile();
+function deleteData(id)
+{
+    $.ajax({
+        type: "post",
+        url: "api/deleteData",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+       },
+        data: { id:id},
+        success: function (data) {
+          
+            if(data.code=="200")
+            {   
+                location.reload();
+            }
+        },
+    });
+}
+
+getProfileDashboard();
 getData();
     </script>
 <html lang="en">

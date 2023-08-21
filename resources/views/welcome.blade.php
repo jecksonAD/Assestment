@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('js/global.js') }}"></script>
 <script>
-
-    function getProfile()
-    {
+function getProfile()
+{
         var cookieName = 'token';
         var cookieValue = getCookieValue(cookieName);
         $.ajax({
@@ -18,28 +18,9 @@
                 }
             },
         });
-    }
+}
 
-    function getCookieValue(cookieName) 
-    {
-        var name = cookieName + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var cookieArray = decodedCookie.split(';');
-        for (var i = 0; i < cookieArray.length; i++) {
-            var cookie = cookieArray[i].trim();
-            if (cookie.indexOf(name) === 0) {
-                return cookie.substring(name.length, cookie.length);
-            }
-        }
-        return null;
-    }
-    function checkToken()
-    {
-        if(getCookieValue("token")!=null)
-        {
-            getProfile();
-        }
-    }
+
    checkToken();
 </script>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
